@@ -1,0 +1,73 @@
+
+import bGLOOP.*;
+
+public class Animation {
+
+    Animation(){
+        GLKamera k = new GLKamera();
+        k.setzePosition(0,500, 0);
+        GLMaus m = new GLMaus();
+        GLTastatur t = new GLTastatur();
+        new GLHimmel(new GLTextur("dramatic_clouds_sunset_180093.jpg"));
+        new GLBoden(new GLTextur("Boden-Gras-Moos-Blumen_Textur_A_P4222586.jpg"));
+        new GLLicht();
+
+        for(int z = -100; z>= 100; z = z + 50)  {
+            for(int x = -100; x>= 100; x = x + 50){            
+                new GLKugel(x, 25, z, 50).setzeFarbe(0, 0.6, 0.1);
+                new GLKugel(x, 25, z, 50).setzeFarbe(0, 0.6, 0.1);
+                new GLKugel(x, 25, z, 50).setzeFarbe(0, 0.6, 0.1);
+                new GLKugel(x, 25, z, 50).setzeFarbe(0, 0.6, 0.1);
+                new GLKugel(x, 25, z, 50).setzeFarbe(0, 0.6, 0.1);
+            }
+        }        
+        System.out.println("Objekte erfolgreich erzeugt! Animation wird eingesetzt!");
+
+        double s = 1;
+        while(true){
+            if(!m.linksklick()){
+                k.dreheUmYAchse(s);
+                k.setzeBlickpunkt(0, 12.5, 0);
+                Sys.warte(10);
+            }
+            else{
+                System.out.println("Anitmation wurde pausiert...");
+                Sys.warte(5000);
+                System.out.println("Anitmation fortgesetzt...");                
+                k.dreheUmYAchse(s);
+                k.setzeBlickpunkt(0, 12.5, 0);
+                Sys.warte(10);
+            }
+
+            if(m.rechtsklick()){
+                k.bildschirmfoto();
+                System.out.println("Screenshot gespeichert!");              
+            }
+
+            if(t.oben()){
+                System.out.println("Die Geschwindigkeit beträgt nun " + ++s);
+                Sys.warte(500);
+            }
+            else if(t.unten()){
+                System.out.println("Die Geschwindigkeit beträgt nun " + --s);
+                Sys.warte(500);
+            }       
+            else if(t.alt()){
+                System.out.println("Die Geschwindigkeit beträgt nun " + --s);
+                Sys.warte(500);
+            }   
+            else if(t.enter()){
+                System.out.println("Halte ENTER eine Sekunde gedrückt um das Programm zu beenden!");
+                Sys.warte(1000);
+                if(t.enter()){
+                    System.out.println("Programm beenden...");
+                    Sys.beenden();
+                    Sys.warte(500);
+                }
+                else
+                    System.out.println("Beenden abgebrochen!");                
+            }
+        }
+    }
+
+}
